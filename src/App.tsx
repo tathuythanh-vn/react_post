@@ -6,14 +6,13 @@ import PostCard from './PostCard';
 const App = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
+      const fetchPosts = async () => {
       try {
         const [postResponse, userResponse] = await Promise.all([
-          fetch('https://jsonplaceholder.typicode.com/posts').then((data) =>
+          fetch(import.meta.env.PUBLIC_BACKEND_URL + '/posts').then((data) =>
             data.json(),
           ),
-          fetch('https://jsonplaceholder.typicode.com/users').then((data) =>
+          fetch(import.meta.env.PUBLIC_BACKEND_URL + '/users').then((data) =>
             data.json(),
           ),
         ]);
@@ -28,14 +27,18 @@ const App = () => {
             : 'Unknown User';
           return { ...post, user };
         });
-
+        
         setPosts(mergedPosts);
       } catch (e) {
         console.error(e);
       }
     };
 
-    fetchPosts();
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchPosts();
+    }
+    fetchData();
   }, []);
 
   const content =
@@ -53,6 +56,7 @@ const App = () => {
     <>
       <h1 className='text-3xl font-bold mt-2 mb-4'>Posts ({posts.length | 0})</h1>
       <div className="post-container">{content}</div>
+      <div className="post-container">{import.meta.env.PUBLIC_BACKEND_URL}</div>
     </>
   );
 };
