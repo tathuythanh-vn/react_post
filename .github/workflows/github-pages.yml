@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      PUBLIC_BACKEND_URL: https://react-post-backend-git-main-22521361-uiteduvns-projects.vercel.app/api
+      PUBLIC_BACKEND_URL: https://react-post-backend.vercel.app/api
 
     steps:
       - name: Checkout
